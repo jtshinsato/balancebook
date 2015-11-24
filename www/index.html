@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- firebase--> 
+    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+
+  </head>
+  <body ng-app="starter" ng-controller="ListCtrl">
+    <ion-header-bar class="top bar-balanced">
+      <h1 class="title">Cost Tracker</h1>
+      <button class="button button-icon ion-plus" ng-click="modal.show()"></button>
+    </ion-header-bar>
+
+    <ion-content class="">
+
+      <ion-list>
+        <div class="item item-divider">
+          <label class="item item-input">
+            <i class="icon ion-search"></i><input type="text" placeholder=" Search" data-ng-model="filter.search">
+          </label>
+        </div>
+        <div class="item item-divider">
+          <div class="row">
+            <div class="col">Total : {{data.total | currency : &quot;$&quot;}}</div>
+            <div class="col">
+              <a class="button button-icon icon ion-checkmark-circled button-small" ng-click="selectAll()"></a>
+
+              <a class="button button-icon icon ion-close-circled button-small" ng-click="unselectAll()"></a>
+
+              <a class="button button-icon icon ion-eye button-small" ng-if="filter.status!==&apos;!hidden&apos;" ng-click="toggleHidden()"></a>
+              <a class="button button-icon icon ion-eye-disabled button-small" ng-if="filter.status===&apos;!hidden&apos;" ng-click="toggleHidden()"></a>
+            </div>
+          </div>
+      </div>
+      <div class="item item-divider">
+        <div class="row">
+          <div class="col"><a ng-click="setSort(&apos;desc&apos;)">Description</a></div>
+          <div class="col"><a ng-click="setSort(&apos;cost&apos;)">Cost</a></div>
+          <div class="col"><a ng-click="setSort(&apos;date&apos;)">Date</a></div>
+        </div>
+      </div>
+        <ion-item ng-repeat="item in items |filter:filter.search  | orderBy:filter.sort:filter.reverse | filter: filter.status" ng-class="{hidden: item.status == &apos;hidden&apos;}">
+          <div class="row">
+            <div class="col">{{item.desc}}</div>
+            <div class="col">{{item.cost | currency : &quot;$&quot; }}</div>
+            <div class="col">{{item.date}}</div>
+          </div>
+          <ion-option-button class="button-assertive ion-close" ng-if="item.status!=&apos;hidden&apos;" ng-click="toggleItem(item)"> </ion-option-button>
+          <ion-option-button class="button-balanced ion-checkmark" ng-if="item.status==&apos;hidden&apos;" ng-click="toggleItem(item)"> </ion-option-button>
+        </ion-item>
+
+        <div class="item item-divider">
+          
+        </div>
+      </ion-list>
+    </ion-content>
+
+  </body>
+</html>

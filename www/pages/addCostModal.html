@@ -1,0 +1,24 @@
+<div class="modal">
+	<ion-header-bar class="top bar-energized">
+      <h1 class="title">Add Expense </h1>
+      <button class="button button-icon ion-close" ng-click="modal.hide()"></button>
+    </ion-header-bar>
+
+	<ion-content class="has-header padding">
+		<ion-list>
+			<label class="item item-input">
+				<input ng-model="desc" type="text" placeholder="Description">
+			</label>
+			<label class="item item-input">
+				<p>$</p><input ng-model="cost"type="number" placeholder="Cost">
+			</label>
+			<label class="item item-input">
+				<input ng-model="itemdate" type="date"s>
+			</label>
+		</ion-list>
+		</br>
+		<span ng-if="desc!=='' && cost!==''">
+			<a class="button icon-right ion-chevron-right button-energized modal-button" ng-click="addItem(desc, cost, itemdate);modal.hide();">Submit</a>
+		</span>
+	</ion-content>
+</div>
